@@ -1,5 +1,6 @@
 ﻿using CRUDAPIWEB.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -95,6 +96,60 @@ namespace CRUDAPIWEB.Controllers
             return Ok();
 
         }
+        [HttpPatch("{id}")]
+        //[Route("PatchBrand/{id}")]
+
+        public async Task<IActionResult> PatchBrand(int id, JsonPatchDocument<Brand> patchDoc)
+        {
+            if (patchDoc == null)
+            {
+                return BadRequest();
+            }
+
+            var brand = await _dbContext.Brands.FindAsync(id);
+            if (brand == null)
+            {
+                return NotFound();
+            }
+
+            patchDoc.ApplyTo(brand, ModelState);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Check if applying the patch was successful
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!BrandExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+
+        private bool BrandExists(int id)
+        {
+            return _dbContext.Brands.Any(e => e.ID == id);
+        }
+
         private bool BrandAvailable(int id)
         {
             return (_dbContext.Brands?.Any(x=>x.ID==id)).GetValueOrDefault();   
@@ -103,4 +158,3 @@ namespace CRUDAPIWEB.Controllers
 
     }
 }
- 

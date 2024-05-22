@@ -8,7 +8,7 @@ builder.Services.AddDbContext<BrandContext>(Options =>
 Options.UseSqlServer(builder.Configuration.GetConnectionString("BrandCS"))
 );
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
