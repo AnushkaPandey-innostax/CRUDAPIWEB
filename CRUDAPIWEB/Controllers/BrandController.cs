@@ -8,10 +8,10 @@ namespace CRUDAPIWEB.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BrandController : ControllerBase
+    public class brandController : ControllerBase
     {
         private readonly BrandContext _dbContext;
-        public BrandController(BrandContext dbContext)
+        public brandController(BrandContext dbContext)
         {
             _dbContext = dbContext;
 
@@ -52,7 +52,7 @@ namespace CRUDAPIWEB.Controllers
         }
 
         [HttpPut]
-        //[Route("PutBrand")]
+        //[R
         public async Task<ActionResult> PutBrand(int id, Brand brand)
         {
             if(id!= brand.ID)
@@ -79,7 +79,7 @@ namespace CRUDAPIWEB.Controllers
         }
 
         [HttpDelete("{id}")]
-        //[Route("DeleteBrand")]
+       
         public async Task<IActionResult> DeleteBrand(int id)
         {
             if(_dbContext.Brands == null)
@@ -97,7 +97,7 @@ namespace CRUDAPIWEB.Controllers
 
         }
         [HttpPatch("{id}")]
-        //[Route("PatchBrand/{id}")]
+    
 
         public async Task<IActionResult> PatchBrand(int id, JsonPatchDocument<Brand> patchDoc)
         {
