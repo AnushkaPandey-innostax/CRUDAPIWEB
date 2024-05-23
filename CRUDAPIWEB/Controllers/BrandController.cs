@@ -17,7 +17,7 @@ namespace CRUDAPIWEB.Controllers
 
         }
         [HttpGet]
-      
+      //GET API
       
         public async Task<ActionResult<IEnumerable<Brand>>> GetBrands()
         {
@@ -28,7 +28,7 @@ namespace CRUDAPIWEB.Controllers
             return await _dbContext.Brands.ToListAsync();
         }
         [HttpGet("{id}")]
-        
+        //GETBYID API
         public async Task<ActionResult<Brand>> GetBrands(int id)
         {
             if (_dbContext.Brands == null)
@@ -44,7 +44,7 @@ namespace CRUDAPIWEB.Controllers
         }
 
         [HttpPost]
-        
+        //POSTAPI
         public async Task<ActionResult<Brand>> PostBrand(Brand brand)
         {
             _dbContext.Brands.Add(brand); 
@@ -53,7 +53,7 @@ namespace CRUDAPIWEB.Controllers
         }
 
         [HttpPut]
-        
+        //PUT API
         public async Task<ActionResult> PutBrand(int id, Brand brand)
         {
             if(id!= brand.ID)
@@ -80,7 +80,7 @@ namespace CRUDAPIWEB.Controllers
         }
 
         [HttpDelete("{id}")]
-       
+       //DELETE API
         public async Task<IActionResult> DeleteBrand(int id)
         {
             if(_dbContext.Brands == null)
@@ -98,7 +98,7 @@ namespace CRUDAPIWEB.Controllers
 
         }
         [HttpPatch("{id}")]
-    
+        //PATCHAPI
 
         public async Task<IActionResult> PatchBrand(int id, JsonPatchDocument<Brand> patchDoc)
         {
