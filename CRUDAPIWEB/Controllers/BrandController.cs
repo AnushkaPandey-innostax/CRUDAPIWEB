@@ -17,7 +17,8 @@ namespace CRUDAPIWEB.Controllers
 
         }
         [HttpGet]
-       // [Route("GetBrands")]
+      
+      
         public async Task<ActionResult<IEnumerable<Brand>>> GetBrands()
         {
             if(_dbContext.Brands == null)
@@ -27,7 +28,7 @@ namespace CRUDAPIWEB.Controllers
             return await _dbContext.Brands.ToListAsync();
         }
         [HttpGet("{id}")]
-        //[Route("GetBrands/{id}")]
+        
         public async Task<ActionResult<Brand>> GetBrands(int id)
         {
             if (_dbContext.Brands == null)
@@ -43,7 +44,7 @@ namespace CRUDAPIWEB.Controllers
         }
 
         [HttpPost]
-        //[Route("PostBrand")]
+        
         public async Task<ActionResult<Brand>> PostBrand(Brand brand)
         {
             _dbContext.Brands.Add(brand); 
@@ -52,7 +53,7 @@ namespace CRUDAPIWEB.Controllers
         }
 
         [HttpPut]
-        //[R
+        
         public async Task<ActionResult> PutBrand(int id, Brand brand)
         {
             if(id!= brand.ID)
