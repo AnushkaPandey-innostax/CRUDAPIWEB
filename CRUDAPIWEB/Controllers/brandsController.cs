@@ -3,15 +3,17 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace CRUDAPIWEB.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class brandController : ControllerBase
+    public class brandsController : ControllerBase
     {
         private readonly BrandContext _dbContext;
-        public brandController(BrandContext dbContext)
+        public brandsController(BrandContext dbContext)
         {
             _dbContext = dbContext;
 
@@ -33,7 +35,7 @@ namespace CRUDAPIWEB.Controllers
         {
             if (_dbContext.Brands == null)
             {
-                return NotFound();
+                return ( NotFound());
             }
             var brand =await _dbContext.Brands.FindAsync(id);
             if (brand == null)
