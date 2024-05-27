@@ -3,22 +3,25 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace CRUDAPIWEB.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class brandController : ControllerBase
+    public class brandsController : ControllerBase
     {
         private readonly BrandContext _dbContext;
-        public brandController(BrandContext dbContext)
+        public brandsController(BrandContext dbContext)
         {
             _dbContext = dbContext;
 
         }
         [HttpGet]
-       // [Route("GetBrands")]
-        public async Task<ActionResult<IEnumerable<Brand>>> GetBrands()
+      //GET API
+      
+        public async Task<ActionResult<IEnumerable<brands>>> GetBrands()
         {
             if(_dbContext.Brands == null)
             {
@@ -27,12 +30,12 @@ namespace CRUDAPIWEB.Controllers
             return await _dbContext.Brands.ToListAsync();
         }
         [HttpGet("{id}")]
-        //[Route("GetBrands/{id}")]
-        public async Task<ActionResult<Brand>> GetBrands(int id)
+        //GETBYID API
+        public async Task<ActionResult<brands>> GetBrands(int id)
         {
             if (_dbContext.Brands == null)
             {
-                return NotFound();
+                return ( NotFound());
             }
             var brand =await _dbContext.Brands.FindAsync(id);
             if (brand == null)
@@ -43,17 +46,17 @@ namespace CRUDAPIWEB.Controllers
         }
 
         [HttpPost]
-        //[Route("PostBrand")]
-        public async Task<ActionResult<Brand>> PostBrand(Brand brand)
+        //POSTAPI
+        public async Task<ActionResult<brands>> PostBrand(brands brand)
         {
             _dbContext.Brands.Add(brand); 
             await _dbContext.SaveChangesAsync();
             return CreatedAtAction(nameof(GetBrands), new {id = brand.ID},brand);
         }
 
-        [HttpPut]
-        //[R
-        public async Task<ActionResult> PutBrand(int id, Brand brand)
+        [HttpPut("{id}")]
+        //PUT API
+        public async Task<ActionResult> PutBrand(int id, brands brand)
         {
             if(id!= brand.ID)
             {
@@ -79,7 +82,7 @@ namespace CRUDAPIWEB.Controllers
         }
 
         [HttpDelete("{id}")]
-       
+       //DELETE API
         public async Task<IActionResult> DeleteBrand(int id)
         {
             if(_dbContext.Brands == null)
@@ -97,9 +100,9 @@ namespace CRUDAPIWEB.Controllers
 
         }
         [HttpPatch("{id}")]
-    
+        //PATCHAPI
 
-        public async Task<IActionResult> PatchBrand(int id, JsonPatchDocument<Brand> patchDoc)
+        public async Task<IActionResult> PatchBrand(int id, JsonPatchDocument<brands> patchDoc)
         {
             if (patchDoc == null)
             {
