@@ -21,7 +21,7 @@ namespace CRUDAPIWEB.Controllers
         [HttpGet]
       //GET API
       
-        public async Task<ActionResult<IEnumerable<Brand>>> GetBrands()
+        public async Task<ActionResult<IEnumerable<brands>>> GetBrands()
         {
             if(_dbContext.Brands == null)
             {
@@ -31,7 +31,7 @@ namespace CRUDAPIWEB.Controllers
         }
         [HttpGet("{id}")]
         //GETBYID API
-        public async Task<ActionResult<Brand>> GetBrands(int id)
+        public async Task<ActionResult<brands>> GetBrands(int id)
         {
             if (_dbContext.Brands == null)
             {
@@ -47,16 +47,16 @@ namespace CRUDAPIWEB.Controllers
 
         [HttpPost]
         //POSTAPI
-        public async Task<ActionResult<Brand>> PostBrand(Brand brand)
+        public async Task<ActionResult<brands>> PostBrand(brands brand)
         {
             _dbContext.Brands.Add(brand); 
             await _dbContext.SaveChangesAsync();
             return CreatedAtAction(nameof(GetBrands), new {id = brand.ID},brand);
         }
 
-        [HttpPut]
+        [HttpPut("{id}")]
         //PUT API
-        public async Task<ActionResult> PutBrand(int id, Brand brand)
+        public async Task<ActionResult> PutBrand(int id, brands brand)
         {
             if(id!= brand.ID)
             {
@@ -102,7 +102,7 @@ namespace CRUDAPIWEB.Controllers
         [HttpPatch("{id}")]
         //PATCHAPI
 
-        public async Task<IActionResult> PatchBrand(int id, JsonPatchDocument<Brand> patchDoc)
+        public async Task<IActionResult> PatchBrand(int id, JsonPatchDocument<brands> patchDoc)
         {
             if (patchDoc == null)
             {
