@@ -9,6 +9,6 @@ namespace CRUDAPIWEB.Models
 
         
         }
-        public DbSet<brands> Brands { get; set; }
+        public DbSet<Brand> Brand { get; set; }
     }
 }

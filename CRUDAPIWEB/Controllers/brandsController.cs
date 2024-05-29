@@ -1,11 +1,7 @@
 ﻿using CRUDAPIWEB.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace CRUDAPIWEB.Controllers
 {
     [Route("api/[controller]")]
@@ -21,23 +17,23 @@ namespace CRUDAPIWEB.Controllers
         [HttpGet]
       //GET API
       
-        public async Task<ActionResult<IEnumerable<brands>>> GetBrands()
+        public async Task<ActionResult<IEnumerable<Brand>>> GetBrands()
         {
-            if(_dbContext.Brands == null)
+            if(_dbContext.Brand == null)
             {
                 return NotFound();
             }
-            return await _dbContext.Brands.ToListAsync();
+            return await _dbContext.Brand.ToListAsync();
         }
         [HttpGet("{id}")]
         //GETBYID API
-        public async Task<ActionResult<brands>> GetBrands(int id)
+        public async Task<ActionResult<Brand>> GetBrands(int id)
         {
-            if (_dbContext.Brands == null)
+            if (_dbContext.Brand == null)
             {
                 return ( NotFound());
             }
-            var brand =await _dbContext.Brands.FindAsync(id);
+            var brand =await _dbContext.Brand.FindAsync(id);
             if (brand == null)
             {
                 return NotFound();
@@ -47,16 +43,16 @@ namespace CRUDAPIWEB.Controllers
 
         [HttpPost]
         //POSTAPI
-        public async Task<ActionResult<brands>> PostBrand(brands brand)
+        public async Task<ActionResult<Brand>> PostBrand(Brand brand)
         {
-            _dbContext.Brands.Add(brand); 
+            _dbContext.Brand.Add(brand); 
             await _dbContext.SaveChangesAsync();
             return CreatedAtAction(nameof(GetBrands), new {id = brand.ID},brand);
         }
 
         [HttpPut("{id}")]
         //PUT API
-        public async Task<ActionResult> PutBrand(int id, brands brand)
+        public async Task<ActionResult> PutBrand(int id, Brand brand)
         {
             if(id!= brand.ID)
             {
@@ -85,16 +81,16 @@ namespace CRUDAPIWEB.Controllers
        //DELETE API
         public async Task<IActionResult> DeleteBrand(int id)
         {
-            if(_dbContext.Brands == null)
+            if(_dbContext.Brand == null)
             {
                 return NotFound();
             }
-            var brand =await _dbContext.Brands.FindAsync(id);
+            var brand =await _dbContext.Brand.FindAsync(id);
             if(brand == null)
             {
                 return NotFound();
             }
-            _dbContext.Brands.Remove(brand);
+            _dbContext.Brand.Remove(brand);
             await _dbContext.SaveChangesAsync();
             return Ok();
 
@@ -102,14 +98,14 @@ namespace CRUDAPIWEB.Controllers
         [HttpPatch("{id}")]
         //PATCHAPI
 
-        public async Task<IActionResult> PatchBrand(int id, JsonPatchDocument<brands> patchDoc)
+        public async Task<IActionResult> PatchBrand(int id, JsonPatchDocument<Brand> patchDoc)
         {
             if (patchDoc == null)
             {
                 return BadRequest();
             }
 
-            var brand = await _dbContext.Brands.FindAsync(id);
+            var brand = await _dbContext.Brand.FindAsync(id);
             if (brand == null)
             {
                 return NotFound();
@@ -150,12 +146,12 @@ namespace CRUDAPIWEB.Controllers
 
         private bool BrandExists(int id)
         {
-            return _dbContext.Brands.Any(e => e.ID == id);
+            return _dbContext.Brand.Any(e => e.ID == id);
         }
 
         private bool BrandAvailable(int id)
         {
-            return (_dbContext.Brands?.Any(x=>x.ID==id)).GetValueOrDefault();   
+            return (_dbContext.Brand?.Any(x=>x.ID==id)).GetValueOrDefault();   
         }
 
 
